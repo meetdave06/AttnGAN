@@ -46,6 +46,14 @@ __C.TRAIN.SMOOTH.GAMMA2 = 5.0
 __C.TRAIN.SMOOTH.LAMBDA = 1.0
 
 
+# TEST
+
+__C.TEST = edict()
+__C.TEST.SAVE_DIR = "../validation"
+__C.TEST.NET_G = ""
+__C.TEST.NET_E = ""
+__C.TEST.BATCH_SIZE = 32
+
 # Modal options
 __C.GAN = edict()
 __C.GAN.DF_DIM = 64

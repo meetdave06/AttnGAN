@@ -1,0 +1,38 @@
+CONFIG_NAME: 'attn2'
+
+DATASET_NAME: 'texture'
+DATA_DIR: '../data/texture'
+GPU_ID: 0
+WORKERS: 1
+
+B_VALIDATION: True  # True  # False
+TREE:
+    BRANCH_NUM: 3
+
+
+TEST:
+    NET_G : '../models/texture_AttnGAN2_100/texture_AttnGAN2_250.pth'
+    NET_E : '../DAMSMencoders/texture/text_encoder100.pth'
+    SAVE_DIR : '../validation/texture_AttnGAN2_100/texture_AttnGAN2_250'
+    # also need to change train batch size for this
+    BATCH_SIZE: 8
+
+
+TRAIN:
+    FLAG: False
+    NET_G: '../models/texture_AttnGAN2_550_class/texture_AttnGAN2_600.pth'
+    B_NET_D: False
+    BATCH_SIZE: 8
+    NET_E: '../DAMSMencoders/texture/text_encoder550_class.pth'
+
+
+GAN:
+    DF_DIM: 64
+    GF_DIM: 32
+    Z_DIM: 100
+    R_NUM: 2
+
+TEXT:
+    EMBEDDING_DIM: 256
+    CAPTIONS_PER_IMAGE: 3
+    # WORDS_NUM: 25

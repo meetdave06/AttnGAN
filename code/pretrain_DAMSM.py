@@ -211,6 +211,9 @@ if __name__ == "__main__":
         args.manualSeed = 100
     elif args.manualSeed is None:
         args.manualSeed = random.randint(1, 10000)
+        args.manualSeed = 5481
+
+    print("Using manual Seed", args.manualSeed)
     random.seed(args.manualSeed)
     np.random.seed(args.manualSeed)
     torch.manual_seed(args.manualSeed)

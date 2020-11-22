@@ -346,7 +346,7 @@ class condGANTrainer(object):
             im.save(fullpath)
 
     def sampling(self, split_dir):
-        if cfg.TRAIN.NET_G == '':
+        if cfg.TEST.NET_G == '':
             print('Error: the path for morels is not found!')
         else:
             if split_dir == 'test':
@@ -362,18 +362,18 @@ class condGANTrainer(object):
             #
             text_encoder = RNN_ENCODER(self.n_words, nhidden=cfg.TEXT.EMBEDDING_DIM)
             state_dict = \
-                torch.load(cfg.TRAIN.NET_E, map_location=lambda storage, loc: storage)
+                torch.load(cfg.TEST.NET_E, map_location=lambda storage, loc: storage)
             text_encoder.load_state_dict(state_dict)
-            print('Load text encoder from:', cfg.TRAIN.NET_E)
+            print('Load text encoder from:', cfg.TEST.NET_E)
             text_encoder = text_encoder.cuda()
             text_encoder.eval()
 
-            batch_size = self.batch_size
+            batch_size = cfg.TEST.BATCH_SIZE
             nz = cfg.GAN.Z_DIM
             noise = Variable(torch.FloatTensor(batch_size, nz), volatile=True)
             noise = noise.cuda()
 
-            model_dir = cfg.TRAIN.NET_G
+            model_dir = cfg.TEST.NET_G
             state_dict = \
                 torch.load(model_dir, map_location=lambda storage, loc: storage)
             # state_dict = torch.load(cfg.TRAIN.NET_G)
@@ -381,7 +381,7 @@ class condGANTrainer(object):
             print('Load G from: ', model_dir)
 
             # the path to save generated images
-            s_tmp = model_dir[:model_dir.rfind('.pth')]
+            s_tmp = cfg.TEST.SAVE_DIR
             save_dir = '%s/%s' % (s_tmp, split_dir)
             mkdir_p(save_dir)
 
@@ -462,6 +462,7 @@ class condGANTrainer(object):
                 captions, cap_lens, sorted_indices = data_dic[key]
 
                 batch_size = captions.shape[0]
+                print("batch sdize", batch_size)
                 nz = cfg.GAN.Z_DIM
                 captions = Variable(torch.from_numpy(captions), volatile=True)
                 cap_lens = Variable(torch.from_numpy(cap_lens), volatile=True)

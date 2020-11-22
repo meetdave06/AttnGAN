@@ -90,6 +90,7 @@ if __name__ == "__main__":
 
     if args.gpu_id != -1:
         cfg.GPU_ID = args.gpu_id
+        torch.cuda.set_device(cfg.GPU_ID)
     else:
         cfg.CUDA = False
 
